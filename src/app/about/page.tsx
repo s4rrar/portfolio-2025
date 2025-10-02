@@ -117,7 +117,7 @@ export default function About() {
             vertical="center"
             marginBottom="32"
           >
-            {about.calendar.display && (
+            {about.telegram.display && (
               <Row
                 fitWidth
                 border="brand-alpha-medium"
@@ -132,10 +132,10 @@ export default function About() {
                   backdropFilter: "blur(var(--static-space-1))",
                 }}
               >
-                <Icon paddingLeft="12" name="calendar" onBackground="brand-weak" />
-                <Row paddingX="8">Schedule a call</Row>
+                <Icon paddingLeft="12" name="telegram" onBackground="brand-weak" />
+                <Row paddingX="8">Contact vie Telegram</Row>
                 <IconButton
-                  href={about.calendar.link}
+                  href={about.telegram.link}
                   data-border="rounded"
                   variant="secondary"
                   icon="chevronRight"

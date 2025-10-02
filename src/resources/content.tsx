@@ -1,5 +1,5 @@
-import { About, Blog, Gallery, Home, Newsletter, Person, Social, Work } from "@/types";
-import { Line, Logo, Row, Text } from "@once-ui-system/core";
+import { About, Home, Newsletter, Person, Social } from "@/types";
+import { Line, Row, Text } from "@once-ui-system/core";
 
 const person: Person = {
   firstName: "AL-Hassan",
@@ -83,9 +83,9 @@ const about: About = {
   avatar: {
     display: true,
   },
-  calendar: {
+  telegram: {
     display: true,
-    link: "https://cal.com",
+    link: "https://t.me/s4rrar",
   },
   intro: {
     display: true,
