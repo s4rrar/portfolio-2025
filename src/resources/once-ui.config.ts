@@ -13,11 +13,12 @@ import {
 import { home } from "./index";
 
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://s4rrar.vercel.app";
+const baseURL: string = "https://i.ibb.co/N6vhcLD9/dbe1c94be63fa384b313fd440a1a274e-1.jpg";
 
 const routes: RoutesConfig = {
   "/": true,
   "/about": true,
+  "/projects": true,
 };
 
 const display: DisplayConfig = {

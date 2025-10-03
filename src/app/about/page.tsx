@@ -1,3 +1,5 @@
+// about
+
 import {
   Avatar,
   Button,
@@ -133,7 +135,7 @@ export default function About() {
                 }}
               >
                 <Icon paddingLeft="12" name="telegram" onBackground="brand-weak" />
-                <Row paddingX="8">Contact vie Telegram</Row>
+                <Row paddingX="8">Contact via Telegram</Row>
                 <IconButton
                   href={about.telegram.link}
                   data-border="rounded"
