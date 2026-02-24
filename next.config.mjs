@@ -22,12 +22,10 @@ const nextConfig = {
     compiler: "modern",
     silenceDeprecations: ["legacy-js-api"],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
+  turbopack: {}, // explicitly define to prevent invalid key injection
 };
 
 export default withMDX(nextConfig);
