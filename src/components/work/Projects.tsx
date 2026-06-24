@@ -9,6 +9,7 @@ import {
   Button,
   Card,
 } from "@once-ui-system/core";
+import { FaStar, FaCodeFork } from "react-icons/fa6";
 
 interface GitHubRepo {
   id: number;
@@ -122,12 +123,12 @@ export function Projects({ range = [1, 6], username = "YOUR_GITHUB_USERNAME" }: 
               <Row gap="16" vertical="center">
                 <Row gap="4" vertical="center">
                   <Text variant="label-default-s" onBackground="neutral-weak">
-                    ⭐ {repo.stargazers_count}
+                    <FaStar size={14} /> {repo.stargazers_count}
                   </Text>
                 </Row>
                 <Row gap="4" vertical="center">
                   <Text variant="label-default-s" onBackground="neutral-weak">
-                    🔀 {repo.forks_count}
+                    <FaCodeFork size={14} /> {repo.forks_count}
                   </Text>
                 </Row>
               </Row>

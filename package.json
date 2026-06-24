@@ -12,7 +12,7 @@
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
     "@next/mdx": "^16.1.6",
-    "@once-ui-system/core": "^1.6.3",
+    "@once-ui-system/core": "^1.7.10",
     "classnames": "^2.5.1",
     "cookie": "^1.0.2",
     "gray-matter": "^4.0.3",
@@ -22,6 +22,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-icons": "^5.5.0",
+    "react-is": "^19.2.7",
     "sass": "^1.86.3",
     "transliteration": "^2.3.5"
   },
@@ -34,5 +35,10 @@
     "eslint": "^9.25.0",
     "typescript": "^5.8.3",
     "tzdata": "^1.0.44"
+  },
+  "allowScripts": {
+    "@biomejs/biome@1.9.4": true,
+    "@parcel/watcher@2.5.1": true,
+    "sharp@0.34.5": true
   }
 }
