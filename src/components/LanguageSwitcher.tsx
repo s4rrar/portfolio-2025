@@ -14,8 +14,21 @@ const languages = [
 export function LanguageSwitcher() {
   const { locale, setLocale } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mediaQuery.matches);
+
+    const handler = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches);
+    };
+
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -40,16 +53,21 @@ export function LanguageSwitcher() {
         padding="4"
         gap="4"
         style={{
-          top: "calc(100% + 4px)",
+          top: isMobile ? "auto" : "calc(100% + 4px)",
+          bottom: isMobile ? "calc(100% + 4px)" : "auto",
           insetInlineEnd: "0",
           zIndex: 100,
           minWidth: "80px",
           opacity: open ? 1 : 0,
-          transform: open ? "translateY(0) scale(1)" : "translateY(-8px) scale(0.95)",
+          transform: open
+            ? "translateY(0) scale(1)"
+            : isMobile
+              ? "translateY(8px) scale(0.95)"
+              : "translateY(-8px) scale(0.95)",
           pointerEvents: open ? "auto" : "none",
           visibility: open ? "visible" : "hidden",
           transition: "opacity 0.15s ease-out, transform 0.15s ease-out, visibility 0.15s",
-          transformOrigin: "top right",
+          transformOrigin: isMobile ? "bottom right" : "top right",
         }}
       >
         {languages.map((lang) => {
