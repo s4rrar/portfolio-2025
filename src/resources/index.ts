@@ -14,6 +14,8 @@ export {
   protectedRoutes,
   baseURL,
   fonts,
+  arabicFont,
+  hebrewFont,
   style,
   schema,
   sameAs,

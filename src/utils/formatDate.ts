@@ -1,4 +1,4 @@
-export function formatDate(date: string, includeRelative = false) {
+export function formatDate(date: string, includeRelative = false, locale = "en-us") {
   const currentDate = new Date();
 
   if (!date.includes("T")) {
@@ -10,6 +10,16 @@ export function formatDate(date: string, includeRelative = false) {
   const monthsAgo = currentDate.getMonth() - targetDate.getMonth();
   const daysAgo = currentDate.getDate() - targetDate.getDate();
 
+  const fullDate = targetDate.toLocaleString(locale, {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  if (!includeRelative) {
+    return fullDate;
+  }
+
   let formattedDate = "";
 
   if (yearsAgo > 0) {
@@ -20,16 +30,6 @@ export function formatDate(date: string, includeRelative = false) {
     formattedDate = `${daysAgo}d ago`;
   } else {
     formattedDate = "Today";
-  }
-
-  const fullDate = targetDate.toLocaleString("en-us", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-
-  if (!includeRelative) {
-    return fullDate;
   }
 
   return `${fullDate} (${formattedDate})`;

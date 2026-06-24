@@ -7,6 +7,8 @@ import { Fade, Flex, Line, Row, ToggleButton } from "@once-ui-system/core";
 
 import { routes, display, person, about } from "@/resources";
 import { ThemeToggle } from "./ThemeToggle";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useTranslation } from "@/i18n/LanguageProvider";
 import styles from "./Header.module.scss";
 
 type TimeDisplayProps = {
@@ -14,8 +16,10 @@ type TimeDisplayProps = {
   locale?: string; // Optionally allow locale, defaulting to 'en-GB'
 };
 
-const TimeDisplay: React.FC<TimeDisplayProps> = ({ timeZone, locale = "en-GB" }) => {
+const TimeDisplay: React.FC<TimeDisplayProps> = ({ timeZone, locale: localeProp = "en-GB" }) => {
   const [currentTime, setCurrentTime] = useState("");
+  const { t } = useTranslation();
+  const resolvedLocale = t.locale === "ar" ? "ar-SA" : t.locale === "he" ? "he-IL" : localeProp;
 
   useEffect(() => {
     const updateTime = () => {
@@ -27,7 +31,7 @@ const TimeDisplay: React.FC<TimeDisplayProps> = ({ timeZone, locale = "en-GB" })
         second: "2-digit",
         hour12: false,
       };
-      const timeString = new Intl.DateTimeFormat(locale, options).format(now);
+      const timeString = new Intl.DateTimeFormat(resolvedLocale, options).format(now);
       setCurrentTime(timeString);
     };
 
@@ -35,7 +39,7 @@ const TimeDisplay: React.FC<TimeDisplayProps> = ({ timeZone, locale = "en-GB" })
     const intervalId = setInterval(updateTime, 1000);
 
     return () => clearInterval(intervalId);
-  }, [timeZone, locale]);
+  }, [timeZone, resolvedLocale]);
 
   return <>{currentTime}</>;
 };
@@ -44,6 +48,7 @@ export default TimeDisplay;
 
 export const Header = () => {
   const pathname = usePathname() ?? "";
+  const { t } = useTranslation();
 
   return (
     <>
@@ -73,7 +78,7 @@ export const Header = () => {
         }}
       >
         <Row paddingLeft="12" fillWidth vertical="center" textVariant="body-default-s">
-          {display.location && <Row s={{ hide: true }}>{person.location}</Row>}
+          {display.location && <Row s={{ hide: true }}>{t.person.location}</Row>}
         </Row>
         <Row fillWidth horizontal="center">
           <Row
@@ -96,7 +101,7 @@ export const Header = () => {
                     <ToggleButton
                       prefixIcon="person"
                       href="/about"
-                      label={about.label}
+                      label={t.about.label}
                       selected={pathname === "/about"}
                     />
                   </Row>
@@ -109,6 +114,8 @@ export const Header = () => {
                   </Row>
                 </>
               )}
+              <Line background="neutral-alpha-medium" vert maxHeight="24" />
+              <LanguageSwitcher />
               {display.themeSwitcher && (
                 <>
                   <Line background="neutral-alpha-medium" vert maxHeight="24" />

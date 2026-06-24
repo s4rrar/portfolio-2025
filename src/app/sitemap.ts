@@ -1,7 +1,6 @@
 import { baseURL, routes as routesConfig } from "@/resources";
 
 export default async function sitemap() {
-
   const activeRoutes = Object.keys(routesConfig).filter(
     (route) => routesConfig[route as keyof typeof routesConfig],
   );

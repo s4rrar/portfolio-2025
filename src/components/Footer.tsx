@@ -1,9 +1,13 @@
+"use client";
+
 import { Row, IconButton, SmartLink, Text } from "@once-ui-system/core";
 import { person, social } from "@/resources";
+import { useTranslation } from "@/i18n/LanguageProvider";
 import styles from "./Footer.module.scss";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useTranslation();
 
   return (
     <Row as="footer" fillWidth padding="8" horizontal="center" s={{ direction: "column" }}>
@@ -18,15 +22,13 @@ export const Footer = () => {
         s={{
           direction: "column",
           horizontal: "center",
-          align: "center",
         }}
       >
         <Text variant="body-default-s" onBackground="neutral-strong">
           <Text onBackground="neutral-weak">© {currentYear} /</Text>
           <Text paddingX="4">{person.name}</Text>
           <Text onBackground="neutral-weak">
-            / Follow me on{" "}
-            <SmartLink href="https://github.com/s4rrar">GitHub</SmartLink>
+            / {t.footer.follow} <SmartLink href="https://github.com/s4rrar">GitHub</SmartLink>
           </Text>
         </Text>
         <Row gap="16">

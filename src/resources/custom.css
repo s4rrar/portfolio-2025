@@ -52,3 +52,21 @@
   --scheme-neutral-600-50: rgba(137,152,159,0.5);
   /*
 }*/
+
+html:lang(ar) {
+  --font-heading: var(--font-arabic) !important;
+  --font-body: var(--font-arabic) !important;
+  --font-label: var(--font-arabic) !important;
+}
+
+html:lang(he) {
+  --font-heading: var(--font-hebrew) !important;
+  --font-body: var(--font-hebrew) !important;
+  --font-label: var(--font-hebrew) !important;
+}
+
+html[dir="rtl"] #about [class*="arrowContainer"] {
+  margin-left: 0 !important;
+  margin-right: calc(-1 * var(--static-space-4)) !important;
+  transform: scale(0.9) rotate(180deg) !important;
+}

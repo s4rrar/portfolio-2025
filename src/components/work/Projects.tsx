@@ -1,15 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  Column,
-  Row,
-  Heading,
-  Text,
-  Button,
-  Card,
-} from "@once-ui-system/core";
+import { Column, Row, Heading, Text, Button, Card } from "@once-ui-system/core";
 import { FaStar, FaCodeFork } from "react-icons/fa6";
+import { useTranslation } from "@/i18n/LanguageProvider";
 
 interface GitHubRepo {
   id: number;
@@ -34,20 +28,21 @@ export function Projects({ range = [1, 6], username = "YOUR_GITHUB_USERNAME" }: 
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function fetchRepos() {
       try {
         const response = await fetch(
-          `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`
+          `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`,
         );
-        
+
         if (!response.ok) {
-          throw new Error("Failed to fetch repositories");
+          throw new Error(t.projects.error);
         }
 
         const data: GitHubRepo[] = await response.json();
-        
+
         // Filter out forks and sort by stars
         const filteredRepos = data
           .filter((repo) => !repo.fork)
@@ -68,7 +63,7 @@ export function Projects({ range = [1, 6], username = "YOUR_GITHUB_USERNAME" }: 
     return (
       <Column fillWidth horizontal="center" paddingY="40">
         <Text variant="body-default-m" onBackground="neutral-weak">
-          Loading projects...
+          {t.projects.loading}
         </Text>
       </Column>
     );
@@ -78,7 +73,7 @@ export function Projects({ range = [1, 6], username = "YOUR_GITHUB_USERNAME" }: 
     return (
       <Column fillWidth horizontal="center" paddingY="40">
         <Text variant="body-default-m" onBackground="neutral-weak">
-          Error loading projects: {error}
+          {t.projects.error}: {error}
         </Text>
       </Column>
     );
@@ -164,20 +159,12 @@ export function Projects({ range = [1, 6], username = "YOUR_GITHUB_USERNAME" }: 
 
             {/* Actions */}
             <Row gap="12" fillWidth>
-              <Button
-                href={repo.html_url}
-                variant="secondary"
-                size="s"
-              >
-                View Code
+              <Button href={repo.html_url} variant="secondary" size="s">
+                {t.projects.viewCode}
               </Button>
               {repo.homepage && (
-                <Button
-                  href={repo.homepage}
-                  variant="tertiary"
-                  size="s"
-                >
-                  Live Demo
+                <Button href={repo.homepage} variant="tertiary" size="s">
+                  {t.projects.liveDemo}
                 </Button>
               )}
             </Row>
@@ -188,7 +175,7 @@ export function Projects({ range = [1, 6], username = "YOUR_GITHUB_USERNAME" }: 
       {displayedRepos.length === 0 && (
         <Column fillWidth horizontal="center" paddingY="40">
           <Text variant="body-default-m" onBackground="neutral-weak">
-            No projects found
+            {t.projects.noProjects}
           </Text>
         </Column>
       )}
@@ -218,6 +205,6 @@ function getLanguageColor(language: string): string {
     Vue: "#41b883",
     React: "#61dafb",
   };
-  
+
   return colors[language] || "#8b949e";
 }

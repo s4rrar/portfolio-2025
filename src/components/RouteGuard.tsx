@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { routes, protectedRoutes } from "@/resources";
 import { Flex, Spinner, Button, Heading, Column, PasswordInput } from "@once-ui-system/core";
 import NotFound from "@/app/not-found";
+import { useTranslation } from "@/i18n/LanguageProvider";
 
 interface RouteGuardProps {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const performChecks = async () => {
@@ -65,7 +67,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
       setIsAuthenticated(true);
       setError(undefined);
     } else {
-      setError("Incorrect password");
+      setError(t.routeGuard.incorrectPassword);
     }
   };
 
@@ -85,17 +87,17 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
     return (
       <Column paddingY="128" maxWidth={24} gap="24" center>
         <Heading align="center" wrap="balance">
-          This page is password protected
+          {t.routeGuard.passwordProtected}
         </Heading>
         <Column fillWidth gap="8" horizontal="center">
           <PasswordInput
             id="password"
-            label="Password"
+            label={t.routeGuard.password}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             errorMessage={error}
           />
-          <Button onClick={handlePasswordSubmit}>Submit</Button>
+          <Button onClick={handlePasswordSubmit}>{t.routeGuard.submit}</Button>
         </Column>
       </Column>
     );

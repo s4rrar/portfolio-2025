@@ -12,40 +12,47 @@ import {
   Schema,
   Row,
 } from "@once-ui-system/core";
-import { baseURL, about, person, social } from "@/resources";
+import { baseURL, about, person, social, home } from "@/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
 import React from "react";
+import { getTranslations, getDir } from "@/i18n";
+import { cookies } from "next/headers";
 
 export async function generateMetadata() {
   return Meta.generate({
     title: about.title,
     description: about.description,
     baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(about.title)}`,
+    image: home.image,
     path: about.path,
   });
 }
 
-export default function About() {
+export default async function About() {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get("locale")?.value || "en";
+  const t = getTranslations(locale);
+  const dir = getDir(locale);
+
   const structure = [
     {
-      title: about.intro.title,
+      title: t.about.intro.title,
       display: about.intro.display,
       items: [],
     },
     {
-      title: about.work.title,
+      title: t.about.work.title,
       display: about.work.display,
       items: about.work.experiences.map((experience) => experience.company),
     },
     {
-      title: about.studies.title,
+      title: t.about.studies.title,
       display: about.studies.display,
       items: about.studies.institutions.map((institution) => institution.name),
     },
     {
-      title: about.technical.title,
+      title: t.about.technical.title,
       display: about.technical.display,
       items: about.technical.skills.map((skill) => skill.title),
     },
@@ -58,7 +65,7 @@ export default function About() {
         title={about.title}
         description={about.description}
         path={about.path}
-        image={`/api/og/generate?title=${encodeURIComponent(about.title)}`}
+        image={home.image}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
@@ -67,17 +74,19 @@ export default function About() {
       />
       {about.tableOfContent.display && (
         <Column
-          left="0"
+          left={dir === "rtl" ? undefined : "0"}
+          right={dir === "rtl" ? "0" : undefined}
           style={{ top: "50%", transform: "translateY(-50%)" }}
           position="fixed"
-          paddingLeft="24"
+          paddingLeft={dir === "rtl" ? undefined : "24"}
+          paddingRight={dir === "rtl" ? "24" : undefined}
           gap="32"
           s={{ hide: true }}
         >
           <TableOfContents structure={structure} about={about} />
         </Column>
       )}
-      <Row fillWidth s={{ direction: "column"}} horizontal="center">
+      <Row fillWidth s={{ direction: "column" }} horizontal="center">
         {about.avatar.display && (
           <Column
             className={styles.avatar}
@@ -96,7 +105,7 @@ export default function About() {
             <Avatar src={person.avatar} size="xl" />
             <Row gap="8" vertical="center">
               <Icon onBackground="accent-weak" name="globe" />
-              {person.location}
+              {t.person.location}
             </Row>
             {person.languages && person.languages.length > 0 && (
               <Row wrap gap="8">
@@ -111,7 +120,7 @@ export default function About() {
         )}
         <Column className={styles.blockAlign} flex={9} maxWidth={40}>
           <Column
-            id={about.intro.title}
+            id={t.about.intro.title}
             fillWidth
             minHeight="160"
             vertical="center"
@@ -132,25 +141,30 @@ export default function About() {
                   backdropFilter: "blur(var(--static-space-1))",
                 }}
               >
-                <Icon paddingLeft="12" name="telegram" onBackground="brand-weak" />
-                <Row paddingX="8">Contact vie Telegram</Row>
+                <Icon
+                  paddingLeft={dir === "rtl" ? undefined : "12"}
+                  paddingRight={dir === "rtl" ? "12" : undefined}
+                  name="telegram"
+                  onBackground="brand-weak"
+                />
+                <Row paddingX="8">{t.about.telegram}</Row>
                 <IconButton
                   href={about.telegram.link}
                   data-border="rounded"
                   variant="secondary"
-                  icon="chevronRight"
+                  icon={dir === "rtl" ? "chevronLeft" : "chevronRight"}
                 />
               </Row>
             )}
             <Heading className={styles.textAlign} variant="display-strong-xl">
-              {person.name}
+              {t.person.name}
             </Heading>
             <Text
               className={styles.textAlign}
               variant="display-default-xs"
               onBackground="neutral-weak"
             >
-              {person.role}
+              {t.person.role}
             </Text>
             {social.length > 0 && (
               <Row
@@ -172,7 +186,7 @@ export default function About() {
                             key={item.name}
                             href={item.link}
                             prefixIcon={item.icon}
-                            label={item.name}
+                            label={t.about.social[item.icon as keyof typeof t.about.social]}
                             size="s"
                             weight="default"
                             variant="secondary"
@@ -196,17 +210,17 @@ export default function About() {
 
           {about.intro.display && (
             <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="xl">
-              {about.intro.description}
+              {t.about.intro.description}
             </Column>
           )}
 
           {about.work.display && (
             <>
-              <Heading as="h2" id={about.work.title} variant="display-strong-s" marginBottom="m">
-                {about.work.title}
+              <Heading as="h2" id={t.about.work.title} variant="display-strong-s" marginBottom="m">
+                {t.about.work.title}
               </Heading>
               <Column fillWidth gap="l" marginBottom="40">
-                {about.work.experiences.map((experience, index) => (
+                {t.about.work.experiences.map((experience, index) => (
                   <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
                     <Row fillWidth horizontal="between" vertical="end" marginBottom="4">
                       <Text id={experience.company} variant="heading-strong-l">
@@ -261,11 +275,16 @@ export default function About() {
 
           {about.studies.display && (
             <>
-              <Heading as="h2" id={about.studies.title} variant="display-strong-s" marginBottom="m">
-                {about.studies.title}
+              <Heading
+                as="h2"
+                id={t.about.studies.title}
+                variant="display-strong-s"
+                marginBottom="m"
+              >
+                {t.about.studies.title}
               </Heading>
               <Column fillWidth gap="l" marginBottom="40">
-                {about.studies.institutions.map((institution, index) => (
+                {t.about.studies.institutions.map((institution, index) => (
                   <Column key={`${institution.name}-${index}`} fillWidth gap="4">
                     <Text id={institution.name} variant="heading-strong-l">
                       {institution.name}
@@ -283,11 +302,11 @@ export default function About() {
             <>
               <Heading
                 as="h2"
-                id={about.technical.title}
+                id={t.about.technical.title}
                 variant="display-strong-s"
                 marginBottom="40"
               >
-                {about.technical.title}
+                {t.about.technical.title}
               </Heading>
               <Column fillWidth gap="l">
                 {about.technical.skills.map((skill, index) => (
@@ -301,7 +320,12 @@ export default function About() {
                     {skill.tags && skill.tags.length > 0 && (
                       <Row wrap gap="8" paddingTop="8">
                         {skill.tags.map((tag, tagIndex) => (
-                          <Tag key={`${skill.title}-${tagIndex}`} size="l" prefixIcon={tag.icon}>
+                          <Tag
+                            key={`${skill.title}-${tagIndex}`}
+                            size="l"
+                            prefixIcon={dir === "rtl" ? undefined : tag.icon}
+                            suffixIcon={dir === "rtl" ? tag.icon : undefined}
+                          >
                             {tag.name}
                           </Tag>
                         ))}

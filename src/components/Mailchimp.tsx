@@ -4,6 +4,7 @@ import { mailchimp, newsletter } from "@/resources";
 import { Button, Heading, Input, Text, Background, Column, Row } from "@once-ui-system/core";
 import { opacity, SpacingToken } from "@once-ui-system/core";
 import { useState } from "react";
+import { useTranslation } from "@/i18n/LanguageProvider";
 
 function debounce<T extends (...args: any[]) => void>(func: T, delay: number): T {
   let timeout: ReturnType<typeof setTimeout>;
@@ -17,6 +18,7 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [touched, setTouched] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const validateEmail = (email: string): boolean => {
     if (email === "") {
@@ -32,7 +34,7 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
     setEmail(value);
 
     if (!validateEmail(value)) {
-      setError("Please enter a valid email address.");
+      setError(t.mailchimp.invalidEmail);
     } else {
       setError("");
     }
@@ -43,7 +45,7 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
   const handleBlur = () => {
     setTouched(true);
     if (!validateEmail(email)) {
-      setError("Please enter a valid email address.");
+      setError(t.mailchimp.invalidEmail);
     }
   };
 
@@ -135,7 +137,7 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
             id="mce-EMAIL"
             name="EMAIL"
             type="email"
-            placeholder="Email"
+            placeholder={t.mailchimp.email}
             required
             onChange={(e) => {
               if (error) {
@@ -172,8 +174,8 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
           </div>
           <div className="clear">
             <Row height="48" vertical="center">
-              <Button id="mc-embedded-subscribe" value="Subscribe" size="m" fillWidth>
-                Subscribe
+              <Button id="mc-embedded-subscribe" value={t.mailchimp.subscribe} size="m" fillWidth>
+                {t.mailchimp.subscribe}
               </Button>
             </Row>
           </div>

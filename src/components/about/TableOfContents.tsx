@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Column, Flex, Text } from "@once-ui-system/core";
+import { useTranslation } from "@/i18n/LanguageProvider";
 import styles from "./about.module.scss";
 
 interface TableOfContentsProps {
@@ -19,6 +20,9 @@ interface TableOfContentsProps {
 }
 
 const TableOfContents: React.FC<TableOfContentsProps> = ({ structure, about }) => {
+  const { t } = useTranslation();
+  const dir = t.dir;
+
   const scrollTo = (id: string, offset: number) => {
     const element = document.getElementById(id);
     if (element) {
@@ -36,14 +40,16 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ structure, about }) =
 
   return (
     <Column
-      left="0"
+      left={dir === "rtl" ? undefined : "0"}
+      right={dir === "rtl" ? "0" : undefined}
       style={{
         top: "50%",
         transform: "translateY(-50%)",
         whiteSpace: "nowrap",
       }}
       position="fixed"
-      paddingLeft="24"
+      paddingLeft={dir === "rtl" ? undefined : "24"}
+      paddingRight={dir === "rtl" ? "24" : undefined}
       gap="32"
       m={{ hide: true }}
     >
@@ -70,7 +76,8 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ structure, about }) =
                     style={{ cursor: "pointer" }}
                     className={styles.hover}
                     gap="12"
-                    paddingLeft="24"
+                    paddingLeft={dir === "rtl" ? undefined : "24"}
+                    paddingRight={dir === "rtl" ? "24" : undefined}
                     vertical="center"
                     onClick={() => scrollTo(item, 80)}
                   >

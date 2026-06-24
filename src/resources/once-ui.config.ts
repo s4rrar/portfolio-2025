@@ -35,6 +35,8 @@ const protectedRoutes: ProtectedRoutesConfig = {
 // Import and set font for each variant
 import { Geist } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
+import { Tajawal } from "next/font/google";
+import { Rubik } from "next/font/google";
 
 const heading = Geist({
   variable: "--font-heading",
@@ -66,6 +68,20 @@ const fonts: FontsConfig = {
   label: label,
   code: code,
 };
+
+const arabicFont = Tajawal({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+  display: "swap",
+  weight: ["200", "300", "400", "500", "700", "800", "900"],
+});
+
+const hebrewFont = Rubik({
+  variable: "--font-hebrew",
+  subsets: ["hebrew", "latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+});
 
 // default customization applied to the HTML in the main layout.tsx
 const style: StyleConfig = {
@@ -191,7 +207,7 @@ const schema: SchemaConfig = {
 
 // social links
 const sameAs: SameAsConfig = {
-  threads: "https://www.threads.com/@s4rrar",
+  instagram: "https://www.instagram.com/s4rrar",
   linkedin: "https://www.linkedin.com/in/s4rrar",
   telegram: "https://t.me/s4rrar",
 };
@@ -203,6 +219,8 @@ export {
   protectedRoutes,
   baseURL,
   fonts,
+  arabicFont,
+  hebrewFont,
   style,
   schema,
   sameAs,

@@ -1,5 +1,4 @@
 import { About, Home, Newsletter, Person, Social } from "@/types";
-import { Line, Row, Text } from "@once-ui-system/core";
 
 const person: Person = {
   firstName: "AL-Hassan",
@@ -8,19 +7,17 @@ const person: Person = {
   role: "Software Engineer",
   avatar: "/images/avatar.jpg",
   email: "s4rrar@protonmail.com",
-  location: "Asia/Jerusalem", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-  languages: ["English", "Arabic", "Hebrew"], // optional: Leave the array empty if you don't want to display languages
+  location: "Asia/Jerusalem",
+  languages: ["English", "Arabic", "Hebrew"],
 };
 
 const newsletter: Newsletter = {
   display: false,
-  title: <>Subscribe to {person.firstName}'s Newsletter</>,
-  description: <>My weekly newsletter about creativity and engineering</>,
+  title: "",
+  description: "",
 };
 
 const social: Social = [
-  // Links are automatically displayed.
-  // Import new icons in /once-ui/icons.ts
   {
     name: "GitHub",
     icon: "github",
@@ -32,9 +29,9 @@ const social: Social = [
     link: "https://www.linkedin.com/in/s4rrar",
   },
   {
-    name: "Threads",
-    icon: "threads",
-    link: "https://www.threads.com/@s4rrar",
+    name: "Instagram",
+    icon: "instagram",
+    link: "https://www.instagram.com/s4rrar",
   },
   {
     name: "Email",
@@ -45,30 +42,17 @@ const social: Social = [
 
 const home: Home = {
   path: "/",
-  image: "/images/og/home.jpg",
+  image: "/metadata/screenshot.png",
   label: "Home",
   title: `${person.name}'s Portfolio`,
   description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>From abstract algorithms to functional, dynamic systems</>,
+  headline: "",
   featured: {
     display: true,
-    title: (
-      <Row gap="12" vertical="center">
-        <strong className="ml-4">@s4rrar</strong>{" "}
-        <Line background="brand-alpha-strong" vert height="20" />
-        <Text marginRight="4" onBackground="brand-medium">
-          Telegram
-        </Text>
-      </Row>
-    ),
+    title: "",
     href: "https://t.me/s4rrar",
   },
-  subline: (
-    <>
-      I'm AL-Hassan Sarrar, a computer scientist,
-      <br /> Interested in cybersecurity, software engineering and AI
-    </>
-  ),
+  subline: "",
 };
 
 const about: About = {
@@ -90,40 +74,18 @@ const about: About = {
   intro: {
     display: true,
     title: "Introduction",
-    description: (
-      <>
-        AL-Hassan Sarrar is a computer scientist specializing in 
-        software engineering, data science, ML, AI, and cyber security. 
-        With a strong foundation in developing robust software systems, 
-        analyzing complex data sets, and ensuring secure digital environments, 
-        focuses on leveraging technology to solve real-world problems. 
-        Passionate about innovation, stays at the forefront of industry trends to 
-        deliver efficient, scalable, and secure solutions.
-      </>
-    ),
+    description: "",
   },
   work: {
-    display: true, // set to false to hide this section
+    display: true,
     title: "Work Experience",
     experiences: [
       {
         company: "Jawwal",
         timeframe: "2025",
         role: "Software Engineer",
-        achievements: [
-          <>
-            Transformed the inspection and documentation system for telecom towers and infrastructure
-            from a fully paper-based process to a complete digital platform, increasing data accuracy
-            and accessibility.
-          </>,
-          <>
-            Implemented end-to-end electronic workflows, eliminating manual paperwork and reducing
-            reporting time by over 50%.
-          </>,
-        ],
-
+        achievements: [],
         images: [
-          // optional: leave the array empty if you don't want to display images
           {
             src: "/images/projects/project-01/cover-01.png",
             alt: "Jawwal Towers",
@@ -135,37 +97,32 @@ const about: About = {
     ],
   },
   studies: {
-    display: true, // set to false to hide this section
+    display: true,
     title: "Studies",
     institutions: [
       {
         name: "Al-Quds University",
-        description: <>Studied computer science.</>,
+        description: "",
       },
       {
         name: "Udemy",
-        description: <>Completed multiple online courses in software development, 
-        cyber security, data science, ML and AI 
-        to enhance technical and professional skills.</>,
+        description: "",
       },
     ],
   },
   technical: {
-    display: false, // set to false to hide this section
+    display: false,
     title: "Technical skills",
     skills: [
       {
         title: "Figma",
-        description: (
-          <>Able to prototype in Figma with Once UI with unnatural speed.</>
-        ),
+        description: "",
         tags: [
           {
             name: "Figma",
             icon: "figma",
           },
         ],
-        // optional: leave the array empty if you don't want to display images
         images: [
           {
             src: "/images/projects/project-01/cover-02.jpg",
@@ -183,9 +140,7 @@ const about: About = {
       },
       {
         title: "Next.js",
-        description: (
-          <>Building next gen apps with Next.js + Once UI + Supabase.</>
-        ),
+        description: "",
         tags: [
           {
             name: "JavaScript",
@@ -200,7 +155,6 @@ const about: About = {
             icon: "supabase",
           },
         ],
-        // optional: leave the array empty if you don't want to display images
         images: [
           {
             src: "/images/projects/project-01/cover-04.jpg",
@@ -209,7 +163,7 @@ const about: About = {
             height: 9,
           },
         ],
-      },  
+      },
     ],
   },
 };
