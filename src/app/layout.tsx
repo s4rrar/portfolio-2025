@@ -54,6 +54,7 @@ export default async function RootLayout({
       lang={locale}
       dir={dir}
       fillWidth
+      data-scroll-behavior="smooth"
       className={classNames(
         fonts.heading.variable,
         fonts.body.variable,
